@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045F68EC2457F60700983B77 /* ResoCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F68EB2457F60700983B77 /* ResoCalendarViewController.swift */; };
+		045F68EE2457F61C00983B77 /* ResoCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F68ED2457F61C00983B77 /* ResoCalendarCell.swift */; };
 		30031AA81DCEA82200FC34FE /* DIYExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30031AA71DCEA82200FC34FE /* DIYExampleViewController.swift */; };
 		30031AAA1DCEA83200FC34FE /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30031AA91DCEA83200FC34FE /* DIYCalendarCell.swift */; };
 		3024AF171E164F8C008B6001 /* DelegateAppearanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024AF161E164F8C008B6001 /* DelegateAppearanceViewController.swift */; };
@@ -50,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		045F68EB2457F60700983B77 /* ResoCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResoCalendarViewController.swift; sourceTree = "<group>"; };
+		045F68ED2457F61C00983B77 /* ResoCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResoCalendarCell.swift; sourceTree = "<group>"; };
 		30031AA71DCEA82200FC34FE /* DIYExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIYExampleViewController.swift; sourceTree = "<group>"; };
 		30031AA91DCEA83200FC34FE /* DIYCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
 		3024AF161E164F8C008B6001 /* DelegateAppearanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateAppearanceViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 		EE0954A91B97DDE0007F6964 /* FSCalendarSwiftExample */ = {
 			isa = PBXGroup;
 			children = (
+				045F68EB2457F60700983B77 /* ResoCalendarViewController.swift */,
+				045F68ED2457F61C00983B77 /* ResoCalendarCell.swift */,
 				EE0954AC1B97DDE0007F6964 /* AppDelegate.swift */,
 				303478381DB520C8007BBD2E /* TableViewController.swift */,
 				F95394791F26BF07005B83E5 /* LunarFormatter.swift */,
@@ -332,6 +338,7 @@
 				30F4C9441E07C3AD00D2EC4D /* FSCalendarExtensions.m in Sources */,
 				30F4C93D1E07C3AD00D2EC4D /* FSCalendarCalculator.m in Sources */,
 				30F4C9411E07C3AD00D2EC4D /* FSCalendarConstants.m in Sources */,
+				045F68EC2457F60700983B77 /* ResoCalendarViewController.swift in Sources */,
 				30F4C9401E07C3AD00D2EC4D /* FSCalendarCollectionViewLayout.m in Sources */,
 				30031AA81DCEA82200FC34FE /* DIYExampleViewController.swift in Sources */,
 				30F4C93F1E07C3AD00D2EC4D /* FSCalendarCollectionView.m in Sources */,
@@ -345,6 +352,7 @@
 				305282C91E1608A100CC2877 /* FSCalendarScopeViewController.swift in Sources */,
 				30F4C9431E07C3AD00D2EC4D /* FSCalendarDelegationProxy.m in Sources */,
 				50F2ADFA216DA21000CC481F /* FSCalendarSeparatorDecorationView.m in Sources */,
+				045F68EE2457F61C00983B77 /* ResoCalendarCell.swift in Sources */,
 				30F4C93C1E07C3AD00D2EC4D /* FSCalendarAppearance.m in Sources */,
 				30F4C9481E07C3AD00D2EC4D /* FSCalendarWeekdayView.m in Sources */,
 				30F4C93E1E07C3AD00D2EC4D /* FSCalendarCell.m in Sources */,
