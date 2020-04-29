@@ -6,13 +6,6 @@
 //
 
 import UIKit
-//import FSCalendar
-
-//UIGestureRecognizerDelegate
-//#import "RangePickerViewController.h"
-//#import "FSCalendar.h"
-//#import "RangePickerCell.h"
-//#import "FSCalendarExtensions.h"
 
 class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
@@ -20,7 +13,6 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
     
     private weak var calendar: FSCalendar!
     private weak var eventLabel: UILabel!
-    //private var dateFormatter: DateFormatter?
     
     fileprivate let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -32,13 +24,6 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
     private var date1: Date?
     // The end date of the range
     private var date2: Date?
-    
-
-    
-//    init() {
-//        super.init()
-//        title = "FSCalendar"
-//    }
 
     override func loadView() {
         
@@ -68,7 +53,7 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         calendar.today = nil // Hide the today circle
         
         calendar.register(
-            ResoCalendarCell.self,
+            ResoCalendarCellTwo.self,
             forCellReuseIdentifier: "cell")
         
         calendar.appearance.headerTitleColor = .red
@@ -82,7 +67,7 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         calendar.appearance.titleTodayColor = .black
         calendar.appearance.todayColor = nil
         //what to do once selected hm
-        //calendar.appearance.todaySelectionColor = .cyan
+        calendar.appearance.todaySelectionColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
         
         //dont have subtitle
         calendar.appearance.subtitleTodayColor = .orange
@@ -143,34 +128,30 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
             value: 10,
             to: Date())!
     }
-
-    /**
-    * This one? Asks the dataSource for a title for the specific date as a replacement of the day text
-    */
-//Set the today date cell's title to something besides the default number. Not what I want
-//    func calendar(_ calendar: FSCalendar, titleFor date: Date) -> String? {
-//        if gregorian.isDateInToday(date) {
-//            return "今"
-//        }
-//
-//        return nil
-//    }
     
     //return border colour if the if statement
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, borderDefaultColorFor date: Date) -> UIColor? {
         
         if gregorian.isDateInToday(date){
-            return .brown
+            return UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
+            
+            //.red
         }
-        return appearance.borderDefaultColor
+        
+        //return colour of border. if appearance.borderDefaultColor that would be probably clear so no visible border. Otherwise color will show on all cells otherwise the if statement
+        return appearance.borderDefaultColor //.purple
     }
     
     //return selected border colour
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, borderSelectionColorFor date: Date) -> UIColor? {
-        if gregorian.isDateInToday(date){
-            return .white
-        }
-        return appearance.borderSelectionColor
+//        if gregorian.isDateInToday(date){
+//            return
+//                //FSCalendar.colorForCellFill
+//                .brown
+//        }
+//        return  appearance.borderSelectionColor //.orange
+        //return Standard Blue as border, so looks not bordered but will be same size as Today's border
+        return UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
     }
     
 
@@ -288,33 +269,7 @@ func calendar(
     didSelect date: Date,
     at monthPosition: FSCalendarMonthPosition
 ) {
-    
-    
-
-//    if calendar.swipeToChooseGesture.state == .changed {
-//        // If the selection is caused by swipe gestures
-//        if !(date1 != nil) {
-//            date1 = date
-//        } else {
-//            if (date2 != nil) {
-//                calendar.deselect(date2!)
-//            }
-//            date2 = date
-//        }
-//    } else {
-//        if (date2 != nil) {
-//            calendar.deselect(date1!)
-//            calendar.deselect(date2!)
-//            date1 = date
-//            date2 = nil
-//        } else if !(date1 != nil) {
-//            date1 = date
-//        } else {
-//            date2 = date
-//        }
-//    }
-//
-//    configureVisibleCells()
+    //nothing
 }
 
 /**

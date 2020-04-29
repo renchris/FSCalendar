@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044907AF2457FE1A000D411B /* ResoCalendarCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 044907AE2457FE1A000D411B /* ResoCalendarCellTwo.m */; };
 		045F68EC2457F60700983B77 /* ResoCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F68EB2457F60700983B77 /* ResoCalendarViewController.swift */; };
 		045F68EE2457F61C00983B77 /* ResoCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F68ED2457F61C00983B77 /* ResoCalendarCell.swift */; };
 		30031AA81DCEA82200FC34FE /* DIYExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30031AA71DCEA82200FC34FE /* DIYExampleViewController.swift */; };
@@ -37,7 +38,6 @@
 		F916F3911E1E57DD00F01811 /* FSCalendarTransitionCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = F916F3901E1E57DD00F01811 /* FSCalendarTransitionCoordinator.m */; };
 		F953947A1F26BF07005B83E5 /* LunarFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95394791F26BF07005B83E5 /* LunarFormatter.swift */; };
 		F9CB48401E406A9200C92065 /* FSCalendarSwiftExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CB483F1E406A9200C92065 /* FSCalendarSwiftExampleUITests.swift */; };
-		F9CB48481E406B7300C92065 /* FSCalendarConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F4C9281E07C3AD00D2EC4D /* FSCalendarConstants.m */; };
 		F9DE053B1E3CCAE800902F7D /* CalendarConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DE053A1E3CCAE800902F7D /* CalendarConfigViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		044907AD2457FDE7000D411B /* ResoCalendarCellTwo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResoCalendarCellTwo.h; sourceTree = "<group>"; };
+		044907AE2457FE1A000D411B /* ResoCalendarCellTwo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResoCalendarCellTwo.m; sourceTree = "<group>"; };
+		044907D824580DC3000D411B /* FSCalendarSwiftExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FSCalendarSwiftExample-Bridging-Header.h"; path = "/Users/default/Documents/FSCalendar/Example-Swift/FSCalendarSwiftExample/FSCalendarSwiftExample-Bridging-Header.h"; sourceTree = "<absolute>"; };
 		045F68EB2457F60700983B77 /* ResoCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResoCalendarViewController.swift; sourceTree = "<group>"; };
 		045F68ED2457F61C00983B77 /* ResoCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResoCalendarCell.swift; sourceTree = "<group>"; };
 		30031AA71DCEA82200FC34FE /* DIYExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIYExampleViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				30F4C9241E07C3AD00D2EC4D /* FSCalendarCollectionView.m */,
 				30F4C9251E07C3AD00D2EC4D /* FSCalendarCollectionViewLayout.h */,
 				30F4C9261E07C3AD00D2EC4D /* FSCalendarCollectionViewLayout.m */,
+				30F4C9271E07C3AD00D2EC4D /* FSCalendarConstants.h */,
+				30F4C9281E07C3AD00D2EC4D /* FSCalendarConstants.m */,
 				50F2ADF9216DA21000CC481F /* FSCalendarSeparatorDecorationView.h */,
 				50F2ADF8216DA20F00CC481F /* FSCalendarSeparatorDecorationView.m */,
 				30F4C9301E07C3AD00D2EC4D /* FSCalendarHeaderView.h */,
@@ -151,8 +156,6 @@
 				F916F3901E1E57DD00F01811 /* FSCalendarTransitionCoordinator.m */,
 				30F4C91F1E07C3AD00D2EC4D /* FSCalendarCalculator.h */,
 				30F4C9201E07C3AD00D2EC4D /* FSCalendarCalculator.m */,
-				30F4C9271E07C3AD00D2EC4D /* FSCalendarConstants.h */,
-				30F4C9281E07C3AD00D2EC4D /* FSCalendarConstants.m */,
 				30F4C9291E07C3AD00D2EC4D /* FSCalendarDelegationFactory.h */,
 				30F4C92A1E07C3AD00D2EC4D /* FSCalendarDelegationFactory.m */,
 				30F4C92B1E07C3AD00D2EC4D /* FSCalendarDelegationProxy.h */,
@@ -188,6 +191,9 @@
 		EE0954A91B97DDE0007F6964 /* FSCalendarSwiftExample */ = {
 			isa = PBXGroup;
 			children = (
+				044907D824580DC3000D411B /* FSCalendarSwiftExample-Bridging-Header.h */,
+				044907AD2457FDE7000D411B /* ResoCalendarCellTwo.h */,
+				044907AE2457FE1A000D411B /* ResoCalendarCellTwo.m */,
 				045F68EB2457F60700983B77 /* ResoCalendarViewController.swift */,
 				045F68ED2457F61C00983B77 /* ResoCalendarCell.swift */,
 				EE0954AC1B97DDE0007F6964 /* AppDelegate.swift */,
@@ -335,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9DE053B1E3CCAE800902F7D /* CalendarConfigViewController.swift in Sources */,
+				044907AF2457FE1A000D411B /* ResoCalendarCellTwo.m in Sources */,
 				30F4C9441E07C3AD00D2EC4D /* FSCalendarExtensions.m in Sources */,
 				30F4C93D1E07C3AD00D2EC4D /* FSCalendarCalculator.m in Sources */,
 				30F4C9411E07C3AD00D2EC4D /* FSCalendarConstants.m in Sources */,
@@ -368,7 +375,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9CB48481E406B7300C92065 /* FSCalendarConstants.m in Sources */,
 				F9CB48401E406A9200C92065 /* FSCalendarSwiftExampleUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,7 +518,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wenchaod.FSCalendarSwiftExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "FSCalendarSwiftExample/Objc-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "FSCalendarSwiftExample/FSCalendarSwiftExample-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -529,7 +535,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wenchaod.FSCalendarSwiftExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "FSCalendarSwiftExample/Objc-Bridge-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "FSCalendarSwiftExample/FSCalendarSwiftExample-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

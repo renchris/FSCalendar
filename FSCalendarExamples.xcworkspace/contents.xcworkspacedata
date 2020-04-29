@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/default/Documents/FSCalendar/Example-Swift/FSCalendarSwiftExample/FSCalendarSwiftExample-Bridging-Header.h">
+   </FileRef>
+   <FileRef
       location = "group:Example-Objc/FSCalendar.xcodeproj">
    </FileRef>
    <FileRef
