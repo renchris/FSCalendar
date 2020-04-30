@@ -13,6 +13,10 @@
 // The circle border for Today
 @property (weak, nonatomic) CAShapeLayer *circleLayer;
 
+// The top line border for each cell
+@property (weak, nonatomic) CALayer *topBorder;
+
+
 @property (weak, nonatomic) UIImageView *circleImageView;
 
 @end

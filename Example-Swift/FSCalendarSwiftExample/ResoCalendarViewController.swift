@@ -38,13 +38,12 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         calendar.delegate = self
         calendar.pagingEnabled = false
         //calendar.allowsMultipleSelection = true
-        calendar.rowHeight = 60
+        calendar.rowHeight = 70
         calendar.placeholderType = FSCalendarPlaceholderType.none
         view.addSubview(calendar)
         self.calendar = calendar
 
         calendar.appearance.titleDefaultColor = UIColor.black
-        //calendar.appearance.headerTitleColor = UIColor.black
         calendar.appearance.titleFont = UIFont.systemFont(ofSize: 16)
         calendar.weekdayHeight = 20
 
@@ -58,44 +57,23 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         
         calendar.appearance.headerTitleColor = .red
         calendar.appearance.headerDateFormat = "MMMM yyyy"
-        //calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize: 22)
         calendar.appearance.headerTitleFont = UIFont.systemFont(ofSize: 22)
+
+        
         //These work once calendar.today is set
-        //Some are default set now that multi select is false
-        
-        
-        
         calendar.appearance.titleTodayColor = .black
         calendar.appearance.todayColor = nil
-        //what to do once selected hm
+        
+        //Sets the selection colour for today to be UIColor
         calendar.appearance.todaySelectionColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
         
-        //dont have subtitle
-        calendar.appearance.subtitleTodayColor = .orange
+        //Moves the event dot 3.5 downwards compared to default placement
+        calendar.appearance.eventOffset = CGPoint(x: 0.0, y: 3.5)
         
-        
-        
+        calendar.appearance.eventDefaultColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
         //Set 'today' to actual current date. Note perhaps time zone issues later on?
         calendar.today = Date()
-        
-//        let todaysCell = calendar.dequeueReusableCell(withIdentifier: "cell", for: calendar.today!, at: .current)
-//
-//        todaysCell.shapeLayer.borderWidth = 5.0
-        
-        //calendar.appearance.borderDefaultColor = .purple
-        //calendar.appearance.borderSelectionColor = .green
-        
-        /**
-        * Asks the delegate for a border radius for the specific date.
-         I suppose 0 is a border and 1 is nothing?
-        */
-        func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, borderRadiusFor date: Date) -> CGFloat {
-            if gregorian.isDateInToday(date)
-            {
-                return 0.0
-            }
-            return 1.0
-        }
+
     }
 
     override func viewDidLoad() {
@@ -108,7 +86,6 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
 
         // For UITest
         self.calendar.accessibilityIdentifier = "calendar"
-        
         
         print("Today's date is: \(Date())")
         
@@ -155,6 +132,10 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         return UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
     }
     
+    //adds number of event dot for given date
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        return 1;
+    }
 
     func calendar(
         _ calendar: FSCalendar,
@@ -169,14 +150,10 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         if gregorian.isDateInToday(date){
             //these going through but not applying
             
-            
 //            cell.shapeLayer.borderWidth = 5.0
 //            cell.appearance.borderRadius = 1
-//
             //cell.shapeLayer = createAnotherShapeLayer()
-            
             //cell.shapeLayer = createFlowerShapeLayer()
-            print("border width today")
         }
         
         return cell
@@ -273,27 +250,6 @@ func calendar(
     configureVisibleCells()
 }
 
-    /**
-    * Asks the delegate for event colors for the specific date.
-     Not sure when this is called? Want to update today colour
-    */
-    func calendar(
-        _ calendar: FSCalendar,
-        appearance: FSCalendarAppearance,
-        eventDefaultColorsFor date: Date
-    ) -> [UIColor]? {
-        
-        print("befor colour")
-        
-        if gregorian.isDateInToday(date) {
-            print("inside colour")
-            return [UIColor.orange]
-            
-        }
-        
-        return [appearance.eventDefaultColor].compactMap { $0 }
-    }
-
 // MARK: - Private methods
     func configureVisibleCells() {
         
@@ -315,26 +271,6 @@ func calendar(
         for date: Date,
         at position: FSCalendarMonthPosition
     ) {
-        let rangeCell = cell
-        if position != .current {
-            //rangeCell.middleLayer.hidden = true
-            //rangeCell.selectionLayer.hidden = true
-            return
-        }
-        if (date1 != nil) && (date2 != nil) {
-            // The date is in the middle of the range
-            let isMiddle = date.compare(date1!) != date.compare(date2!)
-            //rangeCell.middleLayer.hidden = !isMiddle
-        } else {
-            //rangeCell.middleLayer.hidden = true
-        }
-        var isSelected = false
-        
-        //isSelected |= ((date1 != nil) && gregorian.isDate(date, inSameDayAs: date1!))
-        
-        
-        //isSelected |= ((date2 != nil) && gregorian.isDate(date, inSameDayAs: date2!))
-        
-        //rangeCell.selectionLayer.hidden = !isSelected
+        //do stuff for each cell
     }
 }

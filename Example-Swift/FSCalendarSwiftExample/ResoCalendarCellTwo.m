@@ -48,6 +48,7 @@
     CAShapeLayer *shapeLayer;
     UIImageView *imageView;
     CAShapeLayer *circleLayer;
+    CALayer *topBorder;
 
     FSCalendarEventIndicator *eventIndicator;
     
@@ -85,6 +86,18 @@
     [self.contentView.layer insertSublayer:circleLayer below:self.titleLabel.layer]; //underscore to self
     self.circleLayer = circleLayer;
     
+    topBorder = [CALayer layer];
+    //topBorder.backgroundColor = [UIColor orangeColor].CGColor;
+    topBorder.borderWidth = 2.0;
+    topBorder.opacity = 0.5;
+    topBorder.borderColor = [UIColor grayColor].CGColor;
+    
+    [self.contentView.layer addSublayer:topBorder];
+    //[self.contentView.layer insertSublayer:topBorder below:self.titleLabel.layer];
+    self.topBorder = topBorder;
+    
+    
+    
     eventIndicator = [[FSCalendarEventIndicator alloc] initWithFrame:CGRectZero];
     eventIndicator.backgroundColor = [UIColor clearColor];
     eventIndicator.hidden = YES;
@@ -105,6 +118,7 @@
 - (void)layoutSublayersOfLayer:(CALayer *)layer
 {
     [super layoutSublayersOfLayer:layer];
+    //self.topBorder.frame = self.contentView.bounds;
     self.circleLayer.frame = self.contentView.bounds;
 }
 
@@ -170,7 +184,6 @@
 
     //if today, create circle for white circle, which you wont see as background is white until selected.
     if(self.dateIsToday){
-        printf("is today");
         
         self.circleLayer.opacity = 1;
         
@@ -189,7 +202,10 @@
         circleDiameter)] CGPath]];
     }
     
-    
+    self.topBorder.opacity = 0.5;
+    self.topBorder.frame = CGRectMake(0, 0, self.bounds.size.width, 0.5);
+//    printf("self.bounds.size.width: %f", self.bounds.size.width);
+
     
     CGPathRef path = [UIBezierPath bezierPathWithRoundedRect:self.shapeLayer.bounds
                                                 cornerRadius:CGRectGetWidth(self.shapeLayer.bounds)*0.5*self.borderRadius].CGPath;
@@ -212,6 +228,7 @@
     if (self.window) { // Avoid interrupt of navigation transition somehow
         [CATransaction setDisableActions:YES]; // Avoid blink of shape layer.
     }
+    //self.topBorder.opacity = 0;
     self.circleLayer.opacity = 0;
     [self.contentView.layer removeAnimationForKey:@"opacity"];
 
