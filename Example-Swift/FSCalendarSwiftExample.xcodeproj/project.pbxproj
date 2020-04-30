@@ -283,7 +283,7 @@
 				TargetAttributes = {
 					EE0954A61B97DDE0007F6964 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = HZF422TY46;
+						DevelopmentTeam = 68LVX9TX45;
 						LastSwiftMigration = 0900;
 					};
 					F9CB483C1E406A9200C92065 = {
@@ -512,11 +512,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = HZF422TY46;
+				DEVELOPMENT_TEAM = 68LVX9TX45;
 				INFOPLIST_FILE = "$(SRCROOT)/FSCalendarSwiftExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wenchaod.FSCalendarSwiftExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisren.FSCalendarSwiftExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "FSCalendarSwiftExample/FSCalendarSwiftExample-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -533,7 +533,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/FSCalendarSwiftExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wenchaod.FSCalendarSwiftExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisren.FSCalendarSwiftExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "FSCalendarSwiftExample/FSCalendarSwiftExample-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;

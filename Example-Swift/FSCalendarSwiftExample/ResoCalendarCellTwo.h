@@ -10,6 +10,10 @@
 
 @interface ResoCalendarCellTwo : FSCalendarCell
 
+// The circle border for Today
+@property (weak, nonatomic) CAShapeLayer *circleLayer;
+
+@property (weak, nonatomic) UIImageView *circleImageView;
 
 @end
 

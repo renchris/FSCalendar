@@ -22,6 +22,91 @@
     return self.preferredBorderRadius >= 0 ? self.preferredBorderRadius : self.appearance.borderRadius;
 }
 
+#pragma mark - Life cycle
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (void)commonInit
+{
+    UILabel *label;
+    CAShapeLayer *shapeLayer;
+    UIImageView *imageView;
+    CAShapeLayer *circleLayer;
+
+    FSCalendarEventIndicator *eventIndicator;
+    
+    label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    [self.contentView addSubview:label];
+    self.titleLabel = label;
+    
+    label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor lightGrayColor];
+    [self.contentView addSubview:label];
+    self.subtitleLabel = label;
+    
+    shapeLayer = [CAShapeLayer layer];
+    shapeLayer.backgroundColor = [UIColor clearColor].CGColor;
+    shapeLayer.borderWidth = 1.0;
+    shapeLayer.borderColor = [UIColor clearColor].CGColor;
+    shapeLayer.opacity = 0;
+    [self.contentView.layer insertSublayer:shapeLayer below:self.titleLabel.layer]; //underscore to self
+    self.shapeLayer = shapeLayer;
+    
+    circleLayer = [CAShapeLayer layer];//[[CAShapeLayer alloc] init];
+    circleLayer.backgroundColor = [UIColor clearColor].CGColor;
+    circleLayer.borderWidth = 1.0;
+    circleLayer.borderColor = [UIColor clearColor].CGColor;
+    
+    circleLayer.strokeColor = [UIColor whiteColor].CGColor;
+    circleLayer.lineWidth = 2.0;
+    circleLayer.fillColor = [UIColor clearColor].CGColor;
+//    [circleLayer setStrokeColor:[[UIColor redColor] CGColor]];
+//    [circleLayer setLineWidth:(2.0)];
+//    [circleLayer setFillColor:[[UIColor clearColor] CGColor]];
+    [self.contentView.layer insertSublayer:circleLayer below:self.titleLabel.layer]; //underscore to self
+    self.circleLayer = circleLayer;
+    
+    eventIndicator = [[FSCalendarEventIndicator alloc] initWithFrame:CGRectZero];
+    eventIndicator.backgroundColor = [UIColor clearColor];
+    eventIndicator.hidden = YES;
+    [self.contentView addSubview:eventIndicator];
+    self.eventIndicator = eventIndicator;
+    
+    imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    imageView.contentMode = UIViewContentModeBottom|UIViewContentModeCenter;
+    [self.contentView addSubview:imageView];
+    self.imageView = imageView;
+    
+    self.clipsToBounds = NO;
+    self.contentView.clipsToBounds = NO;
+    
+}
+
+//Need this or inner circle is placed incorrectly to the bottom right.
+- (void)layoutSublayersOfLayer:(CALayer *)layer
+{
+    [super layoutSublayersOfLayer:layer];
+    self.circleLayer.frame = self.contentView.bounds;
+}
 
 - (void)layoutSubviews
 {
@@ -82,33 +167,27 @@
     //printf("lineWidth: %f", self.shapeLayer.lineWidth);
     
     self.shapeLayer.lineWidth = 2.0;
-    
+
+    //if today, create circle for white circle, which you wont see as background is white until selected.
     if(self.dateIsToday){
         printf("is today");
-        self.shapeLayer.lineWidth = 2.0;
+        
+        self.circleLayer.opacity = 1;
         
         CGFloat circleDiameter = MIN(self.bounds.size.height*5.0/6.0,self.bounds.size.width);
         
-        circleDiameter = diameter > FSCalendarStandardCellDiameter ? (diameter - (diameter-FSCalendarStandardCellDiameter)*0.75) : diameter;
+        circleDiameter = circleDiameter > FSCalendarStandardCellDiameter ? (circleDiameter - (circleDiameter-FSCalendarStandardCellDiameter)*0.75) : circleDiameter;
         
-        
-        
-        CAShapeLayer *circleLayer = [CAShapeLayer layer];
-        
+        self.circleLayer.frame = CGRectMake((self.bounds.size.width-circleDiameter)/2,
+        (titleHeight-circleDiameter)/2,
+        circleDiameter,
+        circleDiameter);
    
-        [circleLayer setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake((self.bounds.size.width-circleDiameter)/2,
+        [_circleLayer setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake((self.bounds.size.width-circleDiameter)/2,
         (titleHeight-circleDiameter)/2,
         circleDiameter,
         circleDiameter)] CGPath]];
-        [self.contentView.layer addSublayer:circleLayer];
-        [circleLayer setStrokeColor:[[UIColor whiteColor] CGColor]];
-        [circleLayer setLineWidth:(2.0)];
-        [circleLayer setFillColor:[[UIColor clearColor] CGColor]];
     }
-    
-    
-    
-    
     
     
     
@@ -125,7 +204,19 @@
                                        self.fs_width,
                                        eventSize*0.83
                                       );
-    
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    if (self.window) { // Avoid interrupt of navigation transition somehow
+        [CATransaction setDisableActions:YES]; // Avoid blink of shape layer.
+    }
+    self.circleLayer.opacity = 0;
+    [self.contentView.layer removeAnimationForKey:@"opacity"];
+
+    //[self.circleLayer removeAllAnimations];
+    //[self.circleLayer removeFromSuperlayer];
 }
 
 @end

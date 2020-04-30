@@ -181,21 +181,6 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         return cell
     }
     
-    func createAnotherShapeLayer() -> CAShapeLayer{
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.backgroundColor = UIColor.orange.cgColor
-        //[UIColor clearColor].CGColor;
-        shapeLayer.borderWidth = 10.0
-        shapeLayer.borderColor = UIColor.magenta.cgColor
-        shapeLayer.opacity = 0
-        
-        shapeLayer.strokeColor = UIColor.green.cgColor
-        shapeLayer.fillColor = UIColor.yellow.cgColor
-        shapeLayer.fillRule = kCAFillRuleEvenOdd
-        
-        return shapeLayer
-    }
-    
     func createFlowerShapeLayer() -> CAShapeLayer{
         let width: CGFloat = 640
         let height: CGFloat = 640
