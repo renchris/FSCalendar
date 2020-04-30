@@ -58,7 +58,8 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         
         calendar.appearance.headerTitleColor = .red
         calendar.appearance.headerDateFormat = "MMMM yyyy"
-        
+        //calendar.appearance.headerTitleFont = UIFont.boldSystemFont(ofSize: 22)
+        calendar.appearance.headerTitleFont = UIFont.systemFont(ofSize: 22)
         //These work once calendar.today is set
         //Some are default set now that multi select is false
         
