@@ -19,11 +19,6 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
-    
-    // The start date of the range
-    private var date1: Date?
-    // The end date of the range
-    private var date2: Date?
 
     override func loadView() {
         
@@ -56,14 +51,13 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
             textLabel.font = textLabel.font.withSize(14.0)
             textLabel.textColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
             
-            //trying to add a border but haven't got it to work yet
-//            let bottomBorder = CALayer()
-//            bottomBorder.borderColor = UIColor.red.cgColor
-//            bottomBorder.borderWidth = 10
-//            bottomBorder.frame = CGRect(x: -1, y: textLabel.frame.size.height-1,width: textLabel.frame.size.width, height: 1)
-//
-//            //textLabel.clipsToBounds = true
-//            textLabel.layer.addSublayer(bottomBorder)
+            //border under the top weekday labels
+            let bottomBorder = CALayer()
+            bottomBorder.borderColor = UIColor.gray.cgColor
+            bottomBorder.borderWidth = 0.5
+            bottomBorder.frame = CGRect(x: 0, y: topStackViewHeight,width: view.frame.size.width, height: bottomBorder.borderWidth)
+            
+            textLabel.layer.addSublayer(bottomBorder)
             
             stackView.addArrangedSubview(textLabel)
         }
@@ -200,40 +194,9 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
 //            cell.shapeLayer.borderWidth = 5.0
 //            cell.appearance.borderRadius = 1
             //cell.shapeLayer = createAnotherShapeLayer()
-            //cell.shapeLayer = createFlowerShapeLayer()
         }
         
         return cell
-    }
-    
-    func createFlowerShapeLayer() -> CAShapeLayer{
-        let width: CGFloat = 640
-        let height: CGFloat = 640
-             
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.frame = CGRect(x: 0, y: 0,
-                                  width: width, height: height)
-             
-        let path = CGMutablePath()
-             
-        stride(from: 0, to: CGFloat.pi * 2, by: CGFloat.pi / 6).forEach {
-            angle in
-            var transform  = CGAffineTransform(rotationAngle: angle)
-                .concatenating(CGAffineTransform(translationX: width / 2, y: height / 2))
-            
-            let petal = CGPath(ellipseIn: CGRect(x: -20, y: 0, width: 40, height: 100),
-                               transform: &transform)
-            
-            path.addPath(petal)
-        }
-            
-        shapeLayer.path = path
-        shapeLayer.strokeColor = UIColor.red.cgColor
-        shapeLayer.fillColor = UIColor.yellow.cgColor
-        shapeLayer.fillRule = kCAFillRuleEvenOdd
-        
-        return shapeLayer
-    
     }
 
     func calendar(
