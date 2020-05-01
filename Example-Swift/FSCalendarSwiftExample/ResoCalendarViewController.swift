@@ -32,7 +32,54 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         self.view = view
         
         let height: CGFloat = UIDevice.current.model.hasPrefix("iPad") ? 400 : 300
-        let calendar = FSCalendar(frame: CGRect(x: 0, y: self.navigationController!.navigationBar.frame.maxY, width: view.frame.size.width, height: height))
+        
+        //Height of stationary top weekday column
+        let topStackViewHeight: CGFloat = 25.0
+        //Labels in weekday column
+        let daysOfWeek: Array<String> = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        //Colours if colouring each day of week view is wanted. Currently not used and using clear for background.
+        let coloursOfWeek: Array<UIColor> = [.red, .orange, .yellow, .green, .blue, .magenta, .purple]
+
+        //Stack View
+        let stackView   = UIStackView()
+        stackView.axis  = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.fillEqually
+        stackView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        stackView.alignment = UIStackView.Alignment.center
+        
+        for (index, day) in daysOfWeek.enumerated(){
+            let textLabel = UILabel()
+            textLabel.backgroundColor = .clear//coloursOfWeek[index]
+            textLabel.heightAnchor.constraint(equalToConstant: topStackViewHeight).isActive = true
+            textLabel.text  = day
+            textLabel.textAlignment = .center
+            textLabel.font = textLabel.font.withSize(14.0)
+            textLabel.textColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
+            
+            //trying to add a border but haven't got it to work yet
+//            let bottomBorder = CALayer()
+//            bottomBorder.borderColor = UIColor.red.cgColor
+//            bottomBorder.borderWidth = 10
+//            bottomBorder.frame = CGRect(x: -1, y: textLabel.frame.size.height-1,width: textLabel.frame.size.width, height: 1)
+//
+//            //textLabel.clipsToBounds = true
+//            textLabel.layer.addSublayer(bottomBorder)
+            
+            stackView.addArrangedSubview(textLabel)
+        }
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        self.view.addSubview(stackView)
+
+        //Constraints
+        stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+//        stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        
+        stackView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
+        
+        //move calendar down to make room for static weekday labels
+        let calendar = FSCalendar(frame: CGRect(x: 0, y: self.navigationController!.navigationBar.frame.maxY + topStackViewHeight, width: view.frame.size.width, height: height))
     
         calendar.dataSource = self
         calendar.delegate = self
@@ -45,7 +92,7 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
 
         calendar.appearance.titleDefaultColor = UIColor.black
         calendar.appearance.titleFont = UIFont.systemFont(ofSize: 16)
-        calendar.weekdayHeight = 20
+        calendar.weekdayHeight = 0
 
         calendar.swipeToChooseGesture.isEnabled = true
 
@@ -59,7 +106,6 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         calendar.appearance.headerDateFormat = "MMMM yyyy"
         calendar.appearance.headerTitleFont = UIFont.systemFont(ofSize: 22)
 
-        
         //These work once calendar.today is set
         calendar.appearance.titleTodayColor = .black
         calendar.appearance.todayColor = nil
@@ -71,6 +117,7 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         calendar.appearance.eventOffset = CGPoint(x: 0.0, y: 3.5)
         
         calendar.appearance.eventDefaultColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
+        
         //Set 'today' to actual current date. Note perhaps time zone issues later on?
         calendar.today = Date()
 
@@ -112,8 +159,6 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         
         if gregorian.isDateInToday(date){
             return UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
-            
-            //.red
         }
         
         //return colour of border. if appearance.borderDefaultColor that would be probably clear so no visible border. Otherwise color will show on all cells otherwise the if statement
