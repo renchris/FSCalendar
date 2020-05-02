@@ -140,7 +140,7 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
 
 // MARK: - FSCalendarDataSource
     func minimumDate(for calendar: FSCalendar) -> Date {
-        return formatter.date(from: "2016-07-08")!
+        return formatter.date(from: "2019-01-01")! //2016-07-08
     }
 
     func maximumDate(for calendar: FSCalendar) -> Date {
