@@ -59,7 +59,24 @@
 {
     [super layoutSubviews];
     
-    _contentView.frame = self.bounds;
+    //The offset for having the first month positioned into the top of the view as we added space to the top of the header to make room from the bottom of the calendar to the next header.
+    CGFloat firstMonthOffset;
+    
+    if([self.month.description isEqualToString:(NSString *)self.calendar.minimumDate.description]){
+//        printf("SAME date as minimum: %s\n\n", [(NSString *)self.month.description UTF8String]);
+        //Move offest up (negative) by the now larger height of header, minus 40, the size of the header normally
+        firstMonthOffset = 40-self.fs_height;
+    }
+    else{
+        //Not the first month header so don't move the contentView.frame
+//        printf("DIFFERENT date %s ", [(NSString *)self.month.description UTF8String]);
+//        printf("as minimum: %s\n\n", [(NSString *)self.calendar.minimumDate.description UTF8String]);
+        firstMonthOffset = 0;
+    }
+
+    //_contentView.frame = self.bounds;
+    //Move the contentView frame up by the offset to have the view start at the top of the header text like nomral and not the extra space about
+    _contentView.frame = CGRectMake(0, firstMonthOffset, self.fs_width, self.fs_height);
     
     CGFloat weekdayHeight = _calendar.preferredWeekdayHeight;
     CGFloat weekdayMargin = weekdayHeight * 0.1;

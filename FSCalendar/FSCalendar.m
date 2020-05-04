@@ -164,7 +164,8 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
     _minimumDate = [self.formatter dateFromString:@"1970-01-01"];
     _maximumDate = [self.formatter dateFromString:@"2099-12-31"];
     
-    _headerHeight     = FSCalendarAutomaticDimension;
+    //Make header height FSCalendarAutomaticDimension + increment of 70. Not sure what FSCalendarAutomaticDimension is or why it's equal to -1. Nevertheless make headerHeight essentially 70, 30 more than the 40 regular headerHeight for spacing above.
+    _headerHeight     = FSCalendarAutomaticDimension + 70;
     _weekdayHeight    = FSCalendarAutomaticDimension;
     _rowHeight        = FSCalendarStandardRowHeight*MAX(1, FSCalendarDeviceIsIPad*1.5);
     
@@ -219,6 +220,19 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
     [collectionView registerClass:[FSCalendarBlankCell class] forCellWithReuseIdentifier:FSCalendarBlankCellReuseIdentifier];
     [collectionView registerClass:[FSCalendarStickyHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header"];
     [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"placeholderHeader"];
+    
+
+    //Use dispatch_async to make changes apparent on load
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        //Background Thread
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            //Run UI Updates
+            [collectionView setContentOffset:CGPointMake(0, collectionView.contentOffset.y + 30)];
+            
+        });
+    });
+    
     [daysContainer addSubview:collectionView];
     self.collectionView = collectionView;
     self.collectionViewLayout = collectionViewLayout;
@@ -291,7 +305,9 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
             _transitionCoordinator.cachedMonthSize = self.frame.size;
         }
         
+        //contentview is the view that you see the calendar from, the picture frame
         _contentView.frame = self.bounds;
+        
         CGFloat headerHeight = self.preferredHeaderHeight;
         CGFloat weekdayHeight = self.preferredWeekdayHeight;
         CGFloat rowHeight = self.preferredRowHeight;
@@ -300,15 +316,22 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
             rowHeight = FSCalendarFloor(rowHeight*2)*0.5; // Round to nearest multiple of 0.5. e.g. (16.8->16.5),(16.2->16.0)
         }
         
+        //Changing the calendarHeaderView.frame doesn't seem to affect anything. Perhaps it's for when the header is the top drag to change month default style.
         self.calendarHeaderView.frame = CGRectMake(0, 0, self.fs_width, headerHeight);
+        
+        //Likely the same situation as calendarHeaderView. Not being used.
         self.calendarWeekdayView.frame = CGRectMake(0, self.calendarHeaderView.fs_bottom, self.contentView.fs_width, weekdayHeight);
 //        self.calendarWeekdayView.frame = CGRectMake(0, 0, self.contentView.fs_width, weekdayHeight);
 
+        
+        //Not sure what deliver is
         _deliver.frame = CGRectMake(self.calendarHeaderView.fs_left, self.calendarHeaderView.fs_top, self.calendarHeaderView.fs_width, headerHeight+weekdayHeight);
         _deliver.hidden = self.calendarHeaderView.hidden;
         if (!self.floatingMode) {
             switch (self.transitionCoordinator.representingScope) {
                 case FSCalendarScopeMonth: {
+                    //These lines don't seem to get called as perhaps if(!self.floatingMode) is never satisfied in my case
+                    
                     CGFloat contentHeight = rowHeight*6 + padding*2;
                     _daysContainer.frame = CGRectMake(0, headerHeight+weekdayHeight, self.fs_width, contentHeight);
                     _collectionView.frame = CGRectMake(0, 0, _daysContainer.fs_width, contentHeight);
@@ -323,10 +346,12 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
             }
         } else {
             
+            //daysContainer seem to be the same as content view.
             CGFloat contentHeight = _contentView.fs_height;
             _daysContainer.frame = CGRectMake(0, 0, self.fs_width, contentHeight);
+        
+            //collectionView squeezes the calendar to fit its size rather than cuts it off like contentView or daysContainer
             _collectionView.frame = _daysContainer.bounds;
-            
         }
         _collectionView.fs_height = FSCalendarHalfFloor(_collectionView.fs_height);
     }
@@ -1553,6 +1578,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
 
 - (void)configureAppearance
 {
+    //Not sure why but commenting this out doesn't seem to affect anything
     [self.visibleCells makeObjectsPerformSelector:@selector(configureAppearance)];
     [self.visibleStickyHeaders makeObjectsPerformSelector:@selector(configureAppearance)];
     [self.calendarHeaderView configureAppearance];
