@@ -73,8 +73,27 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         stackView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
         
         //move calendar down to make room for static weekday labels
-        let calendar = FSCalendar(frame: CGRect(x: 0, y: self.navigationController!.navigationBar.frame.maxY + topStackViewHeight, width: view.frame.size.width, height: height))
+
+        //In FSCalendar ResoCalendarViewController
+        //navigationBar.frame.maxY: 88.0
+        //navigationBar.frame.size.height: 44.0
+        //navigationBar.frame.origin.y: 44.0
+        
+        //In tabBarApp ResoCalendarViewController
+        //navigationBar.frame.maxY: 44.0
+        //navigationBar.frame.size.height: 44.0
+        //navigationBar.frame.origin.y: 0.0
+        
+        //So we can use: navigationBar.frame.maxY + navigationBar.frame.size.height - navigationBar.frame.origin.y
+        
+        let calendar = FSCalendar(frame: CGRect(x: 0, y: self.navigationController!.navigationBar.frame.maxY + self.navigationController!.navigationBar.frame.size.height - self.navigationController!.navigationBar.frame.origin.y + topStackViewHeight, width: view.frame.size.width, height: height))
+        
+//        print("self.navigationController!.navigationBar.frame.maxY: \(self.navigationController!.navigationBar.frame.maxY)");
+//        print("\ntopStackViewHeight: \(topStackViewHeight)");
+//        print("\nself.navigationController!.navigationBar.frame.size.height: \(self.navigationController!.navigationBar.frame.size.height)");
+//        print("\nself.navigationController!.navigationBar.frame.origin.y: \(self.navigationController!.navigationBar.frame.origin.y)");
     
+        
         calendar.dataSource = self
         calendar.delegate = self
         calendar.pagingEnabled = false
