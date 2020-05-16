@@ -57,7 +57,14 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
             bottomBorder.borderWidth = 0.5
             bottomBorder.frame = CGRect(x: 0, y: topStackViewHeight,width: view.frame.size.width, height: bottomBorder.borderWidth)
             
+            //border under the calendar
+            let underCalendarBorder = CALayer()
+            underCalendarBorder.borderColor = UIColor.gray.cgColor
+            underCalendarBorder.borderWidth = 0.5
+            underCalendarBorder.frame = CGRect(x: 0, y: topStackViewHeight + height, width: view.frame.size.width, height: bottomBorder.borderWidth)
+            
             textLabel.layer.addSublayer(bottomBorder)
+            textLabel.layer.addSublayer(underCalendarBorder)
             
             stackView.addArrangedSubview(textLabel)
         }
