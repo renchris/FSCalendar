@@ -159,6 +159,39 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
     }
 
 // MARK: - FSCalendarDataSource
+    func selectedDateFormatted() -> String{
+        
+        let selectedDate = calendar?.selectedDate ?? formatter.date(from: "0001-01-01")!
+        
+        let dateFormatterWeekdayAndMonth = DateFormatter()
+        dateFormatterWeekdayAndMonth.dateFormat = "EEEE, MMMM"
+        let weekdayAndMonth = dateFormatterWeekdayAndMonth.string(from: selectedDate)
+        
+        let dateFormatterDayDate = DateFormatter()
+        dateFormatterDayDate.dateFormat = "d"
+        let dayDate: Int = Int(dateFormatterDayDate.string(from: selectedDate)) ?? 0
+        
+        var dayOrdinal: String {
+            if(dayDate > 3 && dayDate < 21){
+                return "th"
+            }
+            switch (dayDate % 10){
+            case 1: return "st"
+            case 2: return "nd"
+            case 3: return "rd"
+            default: return "th"
+            }
+        }
+        
+        let dateFormatterYear = DateFormatter()
+        dateFormatterYear.dateFormat = "yyyy"
+        let year = dateFormatterYear.string(from: selectedDate)
+        
+        let formattedDate = ("\(weekdayAndMonth) \(dayDate)\(dayOrdinal), \(year)")
+        
+        return formattedDate
+    }
+    
     func minimumDate(for calendar: FSCalendar) -> Date {
         return formatter.date(from: "2019-01-01")! //2016-07-08
     }
