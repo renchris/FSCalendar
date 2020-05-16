@@ -131,10 +131,11 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         
         calendar.appearance.eventDefaultColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
         
-        
-        
         //Set 'today' to actual current date. Note perhaps time zone issues later on?
         calendar.today = Date()
+        
+        //Sets today as selected
+        calendar.select(calendar.today, scrollToDate: false)
 
     }
 
