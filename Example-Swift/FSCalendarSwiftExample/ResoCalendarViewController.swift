@@ -93,7 +93,19 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         
         //So we can use: navigationBar.frame.maxY + navigationBar.frame.size.height - navigationBar.frame.origin.y
         
-        let calendar = FSCalendar(frame: CGRect(x: 0, y: self.navigationController!.navigationBar.frame.maxY + self.navigationController!.navigationBar.frame.size.height - self.navigationController!.navigationBar.frame.origin.y + topStackViewHeight, width: view.frame.size.width, height: height))
+        //BUT did not correctly scale when going to other devices like iPhone 8
+        //So used topPadding in place of navigationBar.frame.maxY and navigationBar.frame.origin.y
+                
+        //iPhone 8, Plus
+        //topBarHeight: 44.0 + topPadding: 20.0 + topStackViewHeight: 25.0
+        //iPhone 11, Pro, Max
+        //topBarHeight: 44.0 + topPadding: 44.0 + topStackViewHeight: 25.0
+        
+        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        let topPadding = window?.safeAreaInsets.top ?? 0.0
+        
+        let calendar = FSCalendar(frame: CGRect(x: 0, y: self.navigationController!.navigationBar.frame.maxY + topPadding + topStackViewHeight
+            , width: view.frame.size.width, height: height))
         
 //        print("self.navigationController!.navigationBar.frame.maxY: \(self.navigationController!.navigationBar.frame.maxY)");
 //        print("\ntopStackViewHeight: \(topStackViewHeight)");
