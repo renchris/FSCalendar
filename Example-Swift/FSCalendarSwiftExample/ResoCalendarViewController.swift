@@ -178,6 +178,11 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
     }
 
 // MARK: - FSCalendarDataSource
+    
+    func selectedDateUnformatted() -> Date{
+        return calendar?.selectedDate ?? formatter.date(from: "0001-01-01")!
+    }
+    
     func selectedDateFormatted() -> String{
         
         let selectedDate = calendar?.selectedDate ?? formatter.date(from: "0001-01-01")!
