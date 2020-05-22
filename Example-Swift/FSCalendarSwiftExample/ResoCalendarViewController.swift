@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {
     
+    let realm = try! Realm()
+    
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
-    private weak var calendar: FSCalendar!
+    public weak var calendar: FSCalendar!
     private weak var eventLabel: UILabel!
     
     fileprivate let formatter: DateFormatter = {
@@ -252,7 +255,10 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
     
     //adds number of event dot for given date
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return 1;
+        if(self.realm.objects(EventDate.self).filter("dateOfEvent == %@", date).count == 1){
+            return 1
+        }
+        return 0
     }
 
     func calendar(
