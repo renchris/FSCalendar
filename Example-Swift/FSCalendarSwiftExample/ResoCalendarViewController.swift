@@ -22,11 +22,15 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
+    
+    var bottomBorder = CALayer()
+    var underCalendarBorder = CALayer()
+    
 
     override func loadView() {
         
         let view = UIView(frame: UIScreen.main.bounds)
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.systemBackground
         self.view = view
         
         let height: CGFloat = UIDevice.current.model.hasPrefix("iPad") ? 400 : 300
@@ -52,25 +56,23 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
             textLabel.text  = day
             textLabel.textAlignment = .center
             textLabel.font = textLabel.font.withSize(14.0)
-            textLabel.textColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
-            
-            //border under the top weekday labels
-            let bottomBorder = CALayer()
-            bottomBorder.borderColor = UIColor.gray.cgColor
-            bottomBorder.borderWidth = 0.5
-            bottomBorder.frame = CGRect(x: 0, y: topStackViewHeight,width: view.frame.size.width, height: bottomBorder.borderWidth)
-            
-            //border under the calendar
-            let underCalendarBorder = CALayer()
-            underCalendarBorder.borderColor = UIColor.gray.cgColor
-            underCalendarBorder.borderWidth = 0.5
-            underCalendarBorder.frame = CGRect(x: 0, y: topStackViewHeight + height, width: view.frame.size.width, height: bottomBorder.borderWidth)
-            
-            textLabel.layer.addSublayer(bottomBorder)
-            textLabel.layer.addSublayer(underCalendarBorder)
+            textLabel.textColor = .systemBlue//UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
             
             stackView.addArrangedSubview(textLabel)
         }
+        
+        //border under the top weekday labels
+        bottomBorder.borderColor = UIColor.separator.cgColor
+        bottomBorder.borderWidth = 0.5
+        bottomBorder.frame = CGRect(x: 0, y: topStackViewHeight,width: view.frame.size.width, height: bottomBorder.borderWidth)
+        
+        //border under the calendar
+        underCalendarBorder.borderColor = UIColor.separator.cgColor
+        underCalendarBorder.borderWidth = 0.5
+        underCalendarBorder.frame = CGRect(x: 0, y: topStackViewHeight + height, width: view.frame.size.width, height: bottomBorder.borderWidth)
+        
+        stackView.layer.addSublayer(bottomBorder)
+        stackView.layer.addSublayer(underCalendarBorder)
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -125,7 +127,7 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         view.addSubview(calendar)
         self.calendar = calendar
 
-        calendar.appearance.titleDefaultColor = UIColor.black
+        calendar.appearance.titleDefaultColor = UIColor.label
         calendar.appearance.titleFont = UIFont.systemFont(ofSize: 16)
         calendar.weekdayHeight = 0
 
@@ -137,21 +139,22 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
             ResoCalendarCellTwo.self,
             forCellReuseIdentifier: "cell")
         
-        calendar.appearance.headerTitleColor = .red
+        calendar.appearance.headerTitleColor = .systemRed
         calendar.appearance.headerDateFormat = "MMMM yyyy"
         calendar.appearance.headerTitleFont = UIFont.systemFont(ofSize: 22)
 
         //These work once calendar.today is set
-        calendar.appearance.titleTodayColor = .black
+        calendar.appearance.titleTodayColor = .label
         calendar.appearance.todayColor = nil
         
         //Sets the selection colour for today to be UIColor
-        calendar.appearance.todaySelectionColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
+        calendar.appearance.todaySelectionColor = .systemBlue //UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
         
         //Moves the event dot 3.5 downwards compared to default placement
         calendar.appearance.eventOffset = CGPoint(x: 0.0, y: 3.5)
         
-        calendar.appearance.eventDefaultColor = UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
+        calendar.appearance.eventDefaultColor = .purple //UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
+        calendar.appearance.eventSelectionColor = .orange
         
         //Set 'today' to actual current date. Note perhaps time zone issues later on?
         calendar.today = Date()
@@ -175,6 +178,53 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         print("Today's date is: \(Date())")
         
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        //Need to update cgColors
+        setColours()
+    }
+    
+    func setColours(){
+        bottomBorder.borderColor = UIColor.separator.cgColor
+        underCalendarBorder.borderColor = UIColor.separator.cgColor
+        
+
+        
+//        if(calendar.appearance.eventDefaultColor == .label){
+//            print("default colour sysBackground")
+//            calendar.appearance.eventDefaultColor = .systemPink
+//        }
+//        else{
+//            print("default colour NOT sysBackground")
+//            calendar.appearance.eventDefaultColor = .label
+//        }
+//        
+//        if(calendar.appearance.eventSelectionColor == .label){
+//            print("select colour sysBackground")
+//            calendar.appearance.eventSelectionColor = .green
+//        }
+//        else{
+//            print("default colour NOT sysBackground")
+//            calendar.appearance.eventSelectionColor = .label
+//        }
+        
+        //need to change event dot color
+        //NOT UPDATING UPON CHANGE ESPECIALLY IF SELETCTED
+        calendar.appearance.eventDefaultColor = .label
+        calendar.appearance.eventSelectionColor = .label
+    
+        //need to change white inner today border color
+        //need to change blue select fill (not today) color
+        //need to change separator colour
+        
+        //need this or calendar.configureAppearance() to properly adjust today outer nonselected border
+        let todayCell = calendar.cell(for: calendar!.today!, at: FSCalendarMonthPosition.current)
+
+        todayCell?.configureAppearance()
+    }
+    
 
     deinit {
         print("\(#function)")
@@ -234,10 +284,11 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, borderDefaultColorFor date: Date) -> UIColor? {
         
         if gregorian.isDateInToday(date){
-            return UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
+            return .systemBlue//UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
         }
         
         //return colour of border. if appearance.borderDefaultColor that would be probably clear so no visible border. Otherwise color will show on all cells otherwise the if statement
+        //It's nil
         return appearance.borderDefaultColor //.purple
     }
     
@@ -250,7 +301,7 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
 //        }
 //        return  appearance.borderSelectionColor //.orange
         //return Standard Blue as border, so looks not bordered but will be same size as Today's border
-        return UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
+        return .systemBlue//UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
     }
     
     //adds number of event dot for given date
