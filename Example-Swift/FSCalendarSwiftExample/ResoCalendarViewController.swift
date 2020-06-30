@@ -153,8 +153,8 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         //Moves the event dot 3.5 downwards compared to default placement
         calendar.appearance.eventOffset = CGPoint(x: 0.0, y: 3.5)
         
-        calendar.appearance.eventDefaultColor = .purple //UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
-        calendar.appearance.eventSelectionColor = .orange
+        calendar.appearance.eventDefaultColor = .systemBlue //UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0)
+        calendar.appearance.eventSelectionColor = .systemBlue
         
         //Set 'today' to actual current date. Note perhaps time zone issues later on?
         calendar.today = Date()
@@ -189,40 +189,31 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
     func setColours(){
         bottomBorder.borderColor = UIColor.separator.cgColor
         underCalendarBorder.borderColor = UIColor.separator.cgColor
-        
 
+        //change selected date fill colour
+        calendar.appearance.selectionColor = .systemBlue
         
-//        if(calendar.appearance.eventDefaultColor == .label){
-//            print("default colour sysBackground")
-//            calendar.appearance.eventDefaultColor = .systemPink
-//        }
-//        else{
-//            print("default colour NOT sysBackground")
-//            calendar.appearance.eventDefaultColor = .label
-//        }
-//        
-//        if(calendar.appearance.eventSelectionColor == .label){
-//            print("select colour sysBackground")
-//            calendar.appearance.eventSelectionColor = .green
-//        }
-//        else{
-//            print("default colour NOT sysBackground")
-//            calendar.appearance.eventSelectionColor = .label
-//        }
+        calendar.configureAppearance()
         
-        //need to change event dot color
-        //NOT UPDATING UPON CHANGE ESPECIALLY IF SELETCTED
-        calendar.appearance.eventDefaultColor = .label
-        calendar.appearance.eventSelectionColor = .label
-    
-        //need to change white inner today border color
-        //need to change blue select fill (not today) color
-        //need to change separator colour
+        //Change event dot colors
+        //I'm not sure why...but this seems to properly change all event dots
+        //First change it to a temp colour as when it goes from .label in light mode to .label in dark mode, it won't repeat setting the colour to .label
+        
+        let selectedCell = calendar.cell(for: calendar!.selectedDate!, at: FSCalendarMonthPosition.current)
+        
+        selectedCell?.appearance.eventSelectionColor = .red
+        selectedCell?.appearance.eventDefaultColor = .red
+        selectedCell?.appearance.eventSelectionColor = .systemBlue
+        selectedCell?.appearance.eventDefaultColor = .systemBlue
+        
+        selectedCell?.configureAppearance()
         
         //need this or calendar.configureAppearance() to properly adjust today outer nonselected border
         let todayCell = calendar.cell(for: calendar!.today!, at: FSCalendarMonthPosition.current)
 
         todayCell?.configureAppearance()
+        
+        //TODO: Change separator colours from lightGray 60% to separator. Inner today circle from white to label
     }
     
 
