@@ -146,6 +146,7 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         //These work once calendar.today is set
         calendar.appearance.titleTodayColor = .label
         calendar.appearance.todayColor = nil
+        calendar.appearance.selectionColor = .systemBlue
         
         //Sets the selection colour for today to be UIColor
         calendar.appearance.todaySelectionColor = .systemBlue //UIColor(red: 31/255.0, green: 119/255.0, blue: 219/255.0, alpha: 1.0) //FSCalendarStandardSelectionColor   FSColorRGBA(31,119,219,1.0)
@@ -189,11 +190,6 @@ class ResoCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
     func setColours(){
         bottomBorder.borderColor = UIColor.separator.cgColor
         underCalendarBorder.borderColor = UIColor.separator.cgColor
-
-        //change selected date fill colour
-        calendar.appearance.selectionColor = .systemBlue
-        
-        calendar.configureAppearance()
         
         //Change event dot colors
         //I'm not sure why...but this seems to properly change all event dots
