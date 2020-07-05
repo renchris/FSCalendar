@@ -42,6 +42,13 @@
     return self;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    self.circleLayer.strokeColor = [UIColor systemBackgroundColor].CGColor;
+    self.topBorder.borderColor = [UIColor separatorColor].CGColor;
+}
+
 - (void)commonInit
 {
     UILabel *label;
@@ -77,7 +84,7 @@
     circleLayer.borderWidth = 1.0;
     circleLayer.borderColor = [UIColor clearColor].CGColor;
     
-    circleLayer.strokeColor = [UIColor whiteColor].CGColor;
+    circleLayer.strokeColor = [UIColor systemBackgroundColor].CGColor;
     circleLayer.lineWidth = 2.0;
     circleLayer.fillColor = [UIColor clearColor].CGColor;
 //    [circleLayer setStrokeColor:[[UIColor redColor] CGColor]];
@@ -87,11 +94,8 @@
     self.circleLayer = circleLayer;
     
     topBorder = [CALayer layer];
-    //topBorder.backgroundColor = [UIColor orangeColor].CGColor;
-    topBorder.borderWidth = 2.0;
-    topBorder.opacity = 0.5;
-    topBorder.borderColor = [UIColor grayColor].CGColor;
-    
+    topBorder.borderColor = [UIColor separatorColor].CGColor;
+    topBorder.borderWidth = 0.5;
     [self.contentView.layer addSublayer:topBorder];
     //[self.contentView.layer insertSublayer:topBorder below:self.titleLabel.layer];
     self.topBorder = topBorder;
@@ -202,7 +206,6 @@
         circleDiameter)] CGPath]];
     }
     
-    self.topBorder.opacity = 0.5;
     self.topBorder.frame = CGRectMake(0, 0, self.bounds.size.width, 0.5);
 //    printf("self.bounds.size.width: %f", self.bounds.size.width);
 
